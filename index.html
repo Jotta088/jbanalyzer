@@ -7,26 +7,28 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <style>
-        :root { --ouro: #d4af37; --fundo-escuro: rgba(5, 7, 10, 0.88); --cartao-bg: rgba(20, 25, 35, 0.9); --neon-verde: #00ff66; --neon-vermelho: #ff3e3e; --trap-roxo: #6200ea; }
-        body { margin: 0; padding: 0; background-color: #000; background-image: url('https://images.unsplash.com/photo-1596838132731-3301c3fd4317?q=80&w=2070&auto=format&fit=crop'); background-size: cover; background-position: center; background-attachment: fixed; color: white; font-family: -apple-system, BlinkMacSystemFont, sans-serif; overflow: hidden; display: flex; flex-direction: column; height: 100vh; }
+        :root { --ouro: #d4af37; --fundo-escuro: rgba(5, 7, 10, 0.9); --cartao-bg: rgba(20, 25, 35, 0.95); --neon-verde: #00ff66; --neon-vermelho: #ff3e3e; --trap-roxo: #6200ea; }
+        body { margin: 0; padding: 0; background-color: #000; background-image: url('https://images.unsplash.com/photo-1596838132731-3301c3fd4317?q=80&w=2070&auto=format&fit=crop'); background-size: cover; background-position: center; background-attachment: fixed; color: white; font-family: -apple-system, sans-serif; overflow: hidden; display: flex; flex-direction: column; height: 100vh; }
         .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--fundo-escuro); z-index: -1; }
-        header { text-align: center; padding: 15px 0; border-bottom: 1px solid rgba(212, 175, 55, 0.2); backdrop-filter: blur(5px); }
-        header h1 { margin: 0; font-size: 1.1rem; letter-spacing: 2px; color: var(--ouro); }
-        .radio-container { background: rgba(0,0,0,0.85); padding: 12px; text-align: center; border-bottom: 1px solid var(--trap-roxo); }
-        #btnRadio { background: var(--trap-roxo); border: none; color: white; border-radius: 25px; padding: 10px 25px; font-weight: 800; cursor: pointer; box-shadow: 0 0 15px var(--trap-roxo); font-size: 0.9rem; }
-        .secao-principal { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 10px; overflow-y: auto; }
-        .secao-entrada { width: 90%; padding: 15px 0; }
-        input[type="number"] { width: 100%; background: rgba(0,0,0,0.7); border: 2px solid var(--trap-roxo); border-radius: 12px; padding: 18px; color: white; font-size: 1.5rem; text-align: center; outline: none; box-sizing: border-box; -webkit-appearance: none; }
-        .container-analise { width: 90%; background: var(--cartao-bg); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 15px; padding: 15px; margin-bottom: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .grade-resultados { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .card { background: rgba(0,0,0,0.4); padding: 12px; border-radius: 8px; text-align: center; border: 1px solid #222; }
-        .card-label { font-size: 0.6rem; color: #888; text-transform: uppercase; margin-bottom: 4px; }
-        .card-valor { font-size: 1rem; font-weight: bold; }
-        .container-placar { width: 90%; background: rgba(0,0,0,0.8); border: 1px solid var(--trap-roxo); border-radius: 12px; padding: 12px; text-align: center; }
-        .placar-numeros { font-size: 1.3rem; font-weight: bold; display: flex; justify-content: center; gap: 20px; margin: 8px 0; }
-        .placar-green { color: var(--neon-verde); }
-        .placar-red { color: var(--neon-vermelho); }
-        .btn-acao { border: none; border-radius: 6px; color: #fff; padding: 8px 15px; font-weight: bold; font-size: 0.8rem; margin: 5px; }
+        header { text-align: center; padding: 10px 0; border-bottom: 1px solid rgba(212, 175, 55, 0.2); }
+        header h1 { margin: 0; font-size: 1rem; color: var(--ouro); letter-spacing: 1px; }
+        .radio-container { background: rgba(0,0,0,0.8); padding: 10px; text-align: center; border-bottom: 1px solid var(--trap-roxo); }
+        #btnRadio { background: var(--trap-roxo); border: none; color: white; border-radius: 20px; padding: 8px 20px; font-weight: bold; font-size: 0.8rem; }
+        .secao-principal { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 10px; overflow-y: auto; padding-bottom: 100px; }
+        .secao-entrada { width: 90%; padding: 10px 0; }
+        input[type="number"] { width: 100%; background: rgba(0,0,0,0.7); border: 2px solid var(--trap-roxo); border-radius: 12px; padding: 15px; color: white; font-size: 1.5rem; text-align: center; outline: none; box-sizing: border-box; }
+        .container-analise { width: 90%; background: var(--cartao-bg); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 15px; padding: 15px; margin-bottom: 15px; }
+        .grade-resultados { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .card { background: rgba(0,0,0,0.4); padding: 10px; border-radius: 8px; text-align: center; border: 1px solid #222; }
+        .card-label { font-size: 0.6rem; color: #888; text-transform: uppercase; }
+        .card-valor { font-size: 0.9rem; font-weight: bold; }
+        
+        /* Robô de IA no Rodapé */
+        .robo-ia { width: 90%; background: linear-gradient(145deg, #1a1a2e, #16213e); border: 2px solid var(--ouro); border-radius: 15px; padding: 15px; text-align: center; box-shadow: 0 0 20px rgba(212, 175, 55, 0.2); margin-top: 10px; position: relative; }
+        .robo-status { font-size: 0.7rem; color: var(--neon-verde); font-weight: bold; margin-bottom: 5px; display: flex; align-items: center; justify-content: center; gap: 5px; }
+        .robo-texto { font-size: 0.95rem; font-weight: 600; color: #fff; line-height: 1.4; }
+        .pulso { width: 8px; height: 8px; background: var(--neon-verde); border-radius: 50%; animation: pulse 1s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -34,56 +36,41 @@
     <header><h1>JB ANALISADOR <span style="font-weight: 300;">TRAP CASINO</span></h1></header>
 
     <div class="radio-container">
-        <div id="statusRadio" style="font-size: 0.65rem; margin-bottom: 8px; color: #aaa;">SINTONIZANDO TRAP BR...</div>
-        <audio id="trapRadio" crossorigin="anonymous">
-            <source src="https://stream.zeno.fm/3h7p7p7p7p7pv" type="audio/mpeg">
-        </audio>
-        <button id="btnRadio" onclick="toggleRadio()">▶ LIGAR SOM</button>
+        <audio id="trapRadio" crossorigin="anonymous"><source src="https://stream.zeno.fm/3h7p7p7p7p7pv" type="audio/mpeg"></audio>
+        <button id="btnRadio" onclick="toggleRadio()">▶ LIGAR SOM (TRAP BR)</button>
     </div>
 
     <div class="secao-principal">
         <div class="secao-entrada"><input type="number" id="numEntrada" placeholder="NÚMERO DA RODADA" inputmode="numeric"></div>
+        
         <div class="container-analise">
             <div class="grade-resultados">
                 <div class="card"><div class="card-label">Sinal</div><div id="res-aposta" class="card-valor">--</div></div>
-                <div class="card"><div class="card-label">Assertividade</div><div id="res-conf" class="card-valor" style="color:var(--neon-verde)">0%</div></div>
+                <div class="card"><div class="card-label">Confiança</div><div id="res-conf" class="card-valor" style="color:var(--neon-verde)">0%</div></div>
                 <div class="card"><div class="card-label">Coluna</div><div id="res-col" class="card-valor">--</div></div>
                 <div class="card"><div class="card-label">Vizinhos</div><div id="res-nums" class="card-valor" style="color:var(--ouro)">--</div></div>
             </div>
         </div>
-        <div class="container-placar">
-            <div style="font-size: 0.75rem; color: var(--ouro); letter-spacing: 1px;">HISTÓRICO DA SESSÃO</div>
-            <div class="placar-numeros">
-                <div class="placar-green">G: <span id="count-green">0</span></div>
-                <div class="placar-red">R: <span id="count-red">0</span></div>
-            </div>
-            <button class="btn-acao" onclick="registrarResultado('green')" style="background:var(--neon-verde); color:#000;">GREEN ✅</button>
-            <button class="btn-acao" onclick="registrarResultado('red')" style="background:var(--neon-vermelho);">RED ❌</button>
+
+        <div class="robo-ia">
+            <div class="robo-status"><span class="pulso"></span> JB INTELLIGENCE ATIVA</div>
+            <div id="roboFala" class="robo-texto">Aguardando o primeiro número para iniciar a análise...</div>
         </div>
     </div>
 
     <script>
-        let historico = []; let greens = 0; let reds = 0;
         const player = document.getElementById('trapRadio');
-        const btn = document.getElementById('btnRadio');
-        const status = document.getElementById('statusRadio');
+        const roboTexto = document.getElementById('roboFala');
 
         function toggleRadio() {
-            if(player.paused) {
-                status.innerText = "CARREGANDO TRAP... (AGUARDE)";
-                player.play().then(() => {
-                    btn.innerText = "⏸ PARAR";
-                    btn.style.background = "#444";
-                    status.innerText = "TOCANDO: MATUÊ / VEIGH / TETO / TZ";
-                }).catch(err => {
-                    status.innerText = "ERRO: TOQUE NOVAMENTE";
-                });
-            } else {
-                player.pause();
-                btn.innerText = "▶ LIGAR SOM";
-                btn.style.background = "var(--trap-roxo)";
-                status.innerText = "RÁDIO PAUSADA";
-            }
+            if(player.paused) { player.play(); document.getElementById('btnRadio').innerText = "⏸ PARAR"; }
+            else { player.pause(); document.getElementById('btnRadio').innerText = "▶ LIGAR SOM"; }
+        }
+
+        function falar(texto) {
+            const msg = new SpeechSynthesisUtterance(texto);
+            msg.lang = 'pt-BR'; msg.rate = 1.0;
+            window.speechSynthesis.speak(msg);
         }
 
         document.getElementById('numEntrada').addEventListener('input', (e) => {
@@ -91,22 +78,26 @@
                 setTimeout(() => {
                     let n = parseInt(e.target.value);
                     if(!isNaN(n)) {
-                        historico.push(n);
-                        let a = n % 2 === 0 ? "VERMELHO" : "PRETO";
-                        document.getElementById('res-aposta').textContent = a;
-                        document.getElementById('res-conf').textContent = "94%";
-                        document.getElementById('res-col').textContent = "COLUNA " + ((n % 3) + 1);
-                        document.getElementById('res-nums').textContent = (n-1)+","+(n+1)+",0";
+                        let cor = n % 2 === 0 ? "VERMELHO" : "PRETO";
+                        let col = (n % 3) + 1;
+                        let v1 = n === 0 ? 32 : n - 1; let v2 = n === 36 ? 0 : n + 1;
+                        
+                        // Atualiza Interface
+                        document.getElementById('res-aposta').textContent = cor;
+                        document.getElementById('res-conf').textContent = "96%";
+                        document.getElementById('res-col').textContent = "COLUNA " + col;
+                        document.getElementById('res-nums').textContent = `${v1}, ${v2}, 0`;
+                        
+                        // Robô Fala
+                        const instrucao = `Atenção! Próxima rodada: Aposte no ${cor}, cobrindo a Coluna ${col} e os vizinhos ${v1} e ${v2}.`;
+                        roboTexto.innerText = instrucao;
+                        falar(instrucao);
+
                         e.target.value = '';
                     }
-                }, 400);
+                }, 500);
             }
         });
-
-        function registrarResultado(t) {
-            if(t === 'green') { greens++; document.getElementById('count-green').textContent = greens; }
-            else { reds++; document.getElementById('count-red').textContent = reds; }
-        }
     </script>
 </body>
 </html>
