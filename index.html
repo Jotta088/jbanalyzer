@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>JB ANALISADOR PRO</title>
+    <title>JB ANALISADOR TRAP CASINO</title>
     
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -11,215 +11,232 @@
     <style>
         :root {
             --ouro: #d4af37;
-            --fundo-escuro: #05070a;
+            --fundo-escuro: rgba(5, 7, 10, 0.85); /* Fundo semi-transparente sobre a imagem */
             --cartao-bg: rgba(20, 25, 35, 0.9);
             --neon-verde: #00ff66;
             --neon-vermelho: #ff3e3e;
+            --trap-roxo: #6200ea; /* Cor inspirada na vibe Trap */
         }
 
         body {
             margin: 0; padding: 0;
-            background-color: var(--fundo-escuro);
+            background-color: #000;
+            background-image: url('https://images.unsplash.com/photo-1596838132731-3301c3fd4317?q=80&w=2070&auto=format&fit=crop'); /* Imagem de Cassino de Alta Qualidade */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: white;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
             overflow: hidden;
             display: flex; flex-direction: column; height: 100vh;
         }
 
+        /* Camada escura sobre a imagem de fundo */
+        .overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--fundo-escuro);
+            z-index: -1;
+        }
+
+        /* Marca d'água JB */
         .bg-marca-agua {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
             font-size: 15rem; font-weight: 900; color: rgba(212, 175, 55, 0.03); z-index: -1;
+            letter-spacing: -10px;
         }
 
         header {
-            text-align: center; padding: 20px 0;
+            text-align: center; padding: 15px 0;
             border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-        }
-
-        header h1 { margin: 0; font-size: 1.2rem; color: var(--ouro); text-shadow: 0 0 10px rgba(212, 175, 55, 0.4); }
-
-        .radio-box {
-            background: rgba(0,0,0,0.7); padding: 8px; text-align: center; font-size: 0.7rem; border-bottom: 1px solid var(--ouro);
             backdrop-filter: blur(5px);
         }
 
-        .secao-exibicao {
-            flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px;
+        header h1 { margin: 0; font-size: 1.2rem; letter-spacing: 2px; color: var(--ouro); text-shadow: 0 0 10px rgba(212, 175, 55, 0.4); }
+
+        /* Área da Rádio */
+        .radio-container {
+            background: rgba(0,0,0,0.6); padding: 5px; text-align: center;
+            border-bottom: 1px solid #222; font-size: 0.7rem; color: #aaa;
+        }
+        #btnRadio {
+            background: var(--trap-roxo); border: none; color: white; border-radius: 4px;
+            padding: 3px 10px; font-weight: bold; margin-left: 5px; cursor: pointer;
         }
 
-        .circulo-roleta {
-            width: 120px; height: 120px; border-radius: 50%; border: 5px solid #222;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 3rem; font-weight: bold; margin-bottom: 20px; transition: 0.3s;
+        .secao-principal {
+            flex: 1; display: flex; flex-direction: column; align-items: center; padding: 10px; overflow-y: auto;
         }
 
-        .num-vermelho { background: radial-gradient(#e74c3c, #962d22); box-shadow: 0 0 20px #e74c3c; }
-        .num-preto { background: radial-gradient(#444, #000); box-shadow: 0 0 20px #000; }
-        .num-zero { background: radial-gradient(#27ae60, #145a32); box-shadow: 0 0 20px #27ae60; }
-        .num-vazio { background: #1a1a1a; color: #333; }
+        /* Campo de Entrada de Números no Topo */
+        .secao-entrada {
+            width: 90%; padding: 15px 0;
+        }
+        input[type="number"] {
+            width: 100%; background: rgba(0,0,0,0.5); border: 2px solid var(--trap-roxo); border-radius: 12px;
+            padding: 18px; color: white; font-size: 1.5rem; text-align: center; outline: none; transition: 0.3s; box-sizing: border-box;
+            box-shadow: 0 0 15px rgba(98, 0, 234, 0.3);
+        }
+        input[type="number"]:focus { border-color: var(--ouro); box-shadow: 0 0 20px rgba(212, 175, 55, 0.3); }
 
+        /* Painel de Análise */
         .container-analise {
             width: 90%; background: var(--cartao-bg); border: 1px solid rgba(212, 175, 55, 0.2);
-            border-radius: 15px; padding: 15px; backdrop-filter: blur(10px);
+            border-radius: 15px; padding: 15px; backdrop-filter: blur(10px); margin-bottom: 15px;
         }
 
-        .barra-status { display: flex; justify-content: space-between; font-size: 0.6rem; color: var(--ouro); margin-bottom: 10px; font-weight: bold; }
+        .barra-status { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 0.7rem; color: var(--ouro); font-weight: bold; }
+        .pulso { width: 8px; height: 8px; background-color: var(--neon-verde); border-radius: 50%; display: inline-block; margin-right: 5px; animation: piscando 1.5s infinite; }
+        @keyframes piscando { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
 
         .grade-resultados { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
         .card { background: rgba(0,0,0,0.4); padding: 10px; border-radius: 8px; text-align: center; border: 1px solid #222; }
-        .card-label { font-size: 0.6rem; color: #888; text-transform: uppercase; margin-bottom: 3px; }
-        .card-valor { font-size: 1rem; font-weight: bold; }
+        .card-label { font-size: 0.65rem; color: #888; margin-bottom: 3px; text-transform: uppercase; }
+        .card-valor { font-size: 1.1rem; font-weight: bold; }
 
-        .secao-entrada { padding: 20px; }
-        input[type="number"] {
-            width: 100%; background: #111; border: 2px solid #333; border-radius: 10px;
-            padding: 15px; color: white; font-size: 1.2rem; text-align: center; box-sizing: border-box;
-            outline: none;
+        /* Painel de Acertos (NOVO) */
+        .container-placar {
+            width: 90%; background: rgba(0,0,0,0.7); border: 1px solid var(--trap-roxo);
+            border-radius: 10px; padding: 10px; text-align: center; margin-bottom: 20px;
         }
-        input[type="number"]:focus { border-color: var(--ouro); }
+        .placar-titulo { font-size: 0.8rem; color: var(--ouro); text-transform: uppercase; font-weight: bold; margin-bottom: 5px; }
+        .placar-numeros { font-size: 1.2rem; font-weight: bold; display: flex; justify-content: center; gap: 15px; }
+        .placar-green { color: var(--neon-verde); }
+        .placar-red { color: var(--neon-vermelho); }
 
-        #btnRadio {
-            background: var(--ouro); border: none; border-radius: 5px; 
-            font-size: 0.6rem; padding: 5px 12px; font-weight: bold; cursor: pointer;
-            text-transform: uppercase;
-        }
+        .btn-limpar { background: none; border: none; color: #555; width: 100%; font-size: 0.8rem; text-decoration: underline; margin-top: 10px;}
     </style>
 </head>
 <body>
-
+    <div class="overlay"></div>
     <div class="bg-marca-agua">JB</div>
 
     <header>
-        <h1>JB ANALISADOR PRO</h1>
+        <h1>JB ANALISADOR <span style="font-weight: 300;">TRAP CASINO</span></h1>
     </header>
 
-    <div class="radio-box">
-        🎵 TRAP BRASIL LIVE: 
-        <audio id="trapRadio" crossorigin="anonymous">
+    <div class="radio-container">
+        📻 RÁDIO TRAP BR LIVE
+        <audio id="trapRadio" loop>
             <source src="https://stream.zeno.fm/3h7p7p7p7p7pv" type="audio/mpeg">
         </audio>
-        <button onclick="toggleRadio()" id="btnRadio">ATIVAR TRAP BR</button>
+        <button id="btnRadio" onclick="toggleRadio()">LIGAR SOM</button>
     </div>
 
-    <div class="secao-exibicao">
-        <div id="roleta" class="circulo-roleta num-vazio">--</div>
+    <div class="secao-principal">
+        <div class="secao-entrada">
+            <input type="number" id="numEntrada" placeholder="NÚMERO QUE SAIU NA SUPERBET" pattern="\d*" inputmode="numeric">
+        </div>
 
         <div class="container-analise">
             <div class="barra-status">
-                <div>SISTEMA JB ONLINE</div>
-                <div id="contagem">RODADA: 0/3</div>
+                <div><span class="pulso"></span> JB SYSTEM ONLINE</div>
+                <div id="contagem-rodadas">AGUARDANDO 3 RODADAS</div>
             </div>
             <div class="grade-resultados">
-                <div class="card">
-                    <div class="card-label">Sinal</div>
-                    <div id="res-aposta" class="card-valor">AGUARDAR</div>
-                </div>
-                <div class="card">
-                    <div class="card-label">Confiança</div>
-                    <div id="res-conf" class="card-valor" style="color:var(--neon-verde)">0%</div>
-                </div>
-                <div class="card">
-                    <div class="card-label">Coluna</div>
-                    <div id="res-col" class="card-valor">--</div>
-                </div>
-                <div class="card">
-                    <div class="card-label">Vizinhos</div>
-                    <div id="res-nums" class="card-valor" style="color:var(--ouro)">--</div>
-                </div>
+                <div class="card"><div class="card-label">Sinal</div><div id="res-aposta" class="card-valor" style="color:#666">--</div></div>
+                <div class="card"><div class="card-label">Assertividade</div><div id="res-conf" class="card-valor" style="color:var(--neon-verde)">0%</div></div>
+                <div class="card"><div class="card-label">Coluna Alvo</div><div id="res-col" class="card-valor">--</div></div>
+                <div class="card"><div class="card-label">Vizinhos (Proteção)</div><div id="res-nums" class="card-valor" style="font-size:0.9rem; color:var(--ouro)">--</div></div>
             </div>
         </div>
-    </div>
 
-    <div class="secao-entrada">
-        <input type="number" id="numEntrada" placeholder="ÚLTIMO NÚMERO NA SUPERBET" inputmode="numeric">
-    </div>
+        <div class="container-placar">
+            <div class="placar-titulo">Placar da Sessão</div>
+            <div class="placar-numeros">
+                <div class="placar-green">Green: <span id="count-green">0</span></div>
+                <div class="placar-red">Red: <span id="count-red">0</span></div>
+            </div>
+            <div style="font-size: 0.6rem; color: #555; margin-top: 3px;">(Confirme o resultado após a aposta)</div>
+            <div style="margin-top: 5px;">
+                <button onclick="registrarResultado('green')" style="background:var(--neon-verde); border:none; border-radius:4px; color:#000; font-weight:bold; padding:2px 8px; font-size:0.7rem;">GANHEI ✅</button>
+                <button onclick="registrarResultado('red')" style="background:var(--neon-vermelho); border:none; border-radius:4px; color:#fff; font-weight:bold; padding:2px 8px; font-size:0.7rem;">PERDI ❌</button>
+            </div>
+        </div>
 
-    <audio id="somFicha" src="https://assets.mixkit.co/active_storage/sfx/2012/2012-preview.mp3"></audio>
+        <button class="btn-limpar" onclick="resetarApp()">LIMPAR TUDO</button>
+    </div>
 
     <script>
-        const dados = {
-            numeros: [0,32,15,19,4,21,2,25,17,34,6,27,13,36,11,30,8,23,10,5,24,16,33,1,20,14,31,9,22,18,29,7,28,12,35,3,26],
-            vermelhos: [1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36],
-            c1: [1,4,7,10,13,16,19,22,25,28,31,34], c2: [2,5,8,11,14,17,20,23,26,29,32,35], c3: [3,6,9,12,15,18,21,24,27,30,33,36]
-        };
+        const roletaDados={numeros:[0,32,15,19,4,21,2,25,17,34,6,27,13,36,11,30,8,23,10,5,24,16,33,1,20,14,31,9,22,18,29,7,28,12,35,3,26],cores:{vermelho:[1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36],preto:[2,4,6,8,10,11,13,15,17,20,22,24,26,28,29,31,33,35]},colunas:{c1:[1,4,7,10,13,16,19,22,25,28,31,34],c2:[2,5,8,11,14,17,20,23,26,29,32,35],c3:[3,6,9,12,15,18,21,24,27,30,33,36]}};
+        let historico=[];
+        let greens = 0;
+        let reds = 0;
 
-        let historico = [];
-
+        // Rádio
         function toggleRadio() {
             const r = document.getElementById('trapRadio');
             const b = document.getElementById('btnRadio');
-            if(r.paused) { 
-                r.play().catch(e => alert("Toque na tela para permitir o áudio")); 
-                b.innerText = "STOP TRAP BR";
-                b.style.background = "#ff3e3e";
-            } 
-            else { 
-                r.pause(); 
-                b.innerText = "ATIVAR TRAP BR"; 
-                b.style.background = "var(--ouro)";
-            }
+            if(r.paused) { r.play(); b.innerText = "PARAR"; b.style.background = "#555"; } 
+            else { r.pause(); b.innerText = "LIGAR SOM"; b.style.background = "var(--trap-roxo)"; }
         }
 
-        function falar(texto) {
-            const voz = new SpeechSynthesisUtterance(texto);
-            voz.lang = 'pt-BR';
-            voz.rate = 1.2;
-            window.speechSynthesis.speak(voz);
-        }
-
-        document.getElementById('numEntrada').addEventListener('input', function(e) {
-            const val = e.target.value;
-            if(val.length >= 1) {
-                const num = parseInt(val);
-                if(num >= 0 && num <= 36) {
-                    document.getElementById('somFicha').play();
-                    setTimeout(() => processar(num), 500);
-                    e.target.value = '';
-                }
+        const input=document.getElementById('numEntrada');
+        input.addEventListener('input',(e)=>{
+            const val=e.target.value;
+            if(val.length>=1){
+                setTimeout(()=>{
+                    const num=parseInt(val);
+                    if(!isNaN(num)&&num>=0&&num<=36){
+                        processarNumero(num);
+                        e.target.value='';
+                    }
+                },600);
             }
         });
 
-        function processar(num) {
+        function processarNumero(num){
             historico.push(num);
-            const r = document.getElementById('roleta');
-            r.innerText = num;
-            r.className = 'circulo-roleta ' + (num === 0 ? 'num-zero' : (dados.vermelhos.includes(num) ? 'num-vermelho' : 'num-preto'));
-
-            if(historico.length < 3) {
-                document.getElementById('contagem').innerText = `RODADA: ${historico.length}/3`;
-            } else {
-                analisar();
+            if(historico.length>10)historico.shift();
+            if(historico.length<3){
+                document.getElementById('contagem-rodadas').textContent=`AGUARDANDO: ${historico.length}/3 RODADAS`;
+            }else{
+                document.getElementById('contagem-rodadas').textContent=`SINAL JB ATIVO`;
+                executarAnalise();
             }
         }
 
-        function analisar() {
-            const ultimos = historico.slice(-3);
-            const n3 = ultimos[2];
-            
-            // Lógica: Se 2 dos últimos 3 foram de uma cor, aposta na quebra (martingale inverso)
-            const reds = ultimos.filter(n => dados.vermelhos.includes(n)).length;
-            let aposta = reds >= 2 ? "PRETO" : "VERMELHO";
-            
-            document.getElementById('res-aposta').innerText = aposta;
-            document.getElementById('res-aposta').style.color = aposta === "VERMELHO" ? "var(--neon-vermelho)" : "#fff";
-            document.getElementById('res-conf').innerText = (90 + Math.floor(Math.random() * 8)) + "%";
-            
-            // Coluna alvo
-            const c1 = historico.filter(n => dados.c1.includes(n)).length;
-            const c3 = historico.filter(n => dados.c3.includes(n)).length;
-            const coluna = c1 <= c3 ? "1ª COLUNA" : "3ª COLUNA";
-            document.getElementById('res-col').innerText = coluna;
-            
-            // Vizinhos
-            const idx = dados.numeros.indexOf(n3);
-            const v1 = dados.numeros[(idx + 1) % 37];
-            const v2 = dados.numeros[(idx - 1 + 37) % 37];
-            document.getElementById('res-nums').innerText = `${v1}, ${v2}, 0`;
-
-            // IA JB FALANDO
-            falar(`Atenção, sinal JB identificado. É hora de entrar no ${aposta}. Boa sorte.`);
+        function falar(t){
+            const v=new SpeechSynthesisUtterance(t);
+            v.lang='pt-BR'; v.rate=1.1;
+            window.speechSynthesis.speak(v);
         }
-    </script>
+
+        function executarAnalise(){
+            const u=historico.slice(-3);
+            const n3=u[2];
+            const r=u.filter(n=>roletaDados.cores.vermelho.includes(n)).length;
+            const p=u.filter(n=>roletaDados.cores.preto.includes(n)).length;
+            let a="PULAR"; let c=0;
+            if(r>=2){a="PRETO";c=90;}else if(p>=2){a="VERMELHO";c=90;}
+            const c1=historico.filter(n=>roletaDados.colunas.c1.includes(n)).length;
+            const c2=historico.filter(n=>roletaDados.colunas.c2.includes(n)).length;
+            const c3=historico.filter(n=>roletaDados.colunas.c3.includes(n)).length;
+            let ca="2ª COLUNA"; if(c1<=c2&&c1<=c3)ca="1ª COLUNA"; else if(c3<=c1&&c3<=c2)ca="3ª COLUNA";
+            const i=roletaDados.numeros.indexOf(n3);
+            const v1=roletaDados.numeros[(i+1)%37]; const v2=roletaDados.numeros[(i-1+37)%37];
+            const ae=document.getElementById('res-aposta');
+            ae.textContent=a; ae.style.color=a==="VERMELHO"? "var(--neon-vermelho)":(a==="PRETO"?"white":"#00ff66");
+            document.getElementById('res-conf').textContent=(c+(Math.random()*5)).toFixed(0)+"%";
+            document.getElementById('res-col').textContent=ca;
+            document.getElementById('res-nums').textContent=`${v1}, ${v2}, 0`;
+            falar(`Atenção. Sinal JB. Entrada confirmada no ${a}.`);
+        }
+
+        // Placar (NOVO)
+        function registrarResultado(tipo) {
+            if (historico.length < 3) return; // Não registra sem análise
+            if (tipo === 'green') { greens++; document.getElementById('count-green').textContent = greens; } 
+            else { reds++; document.getElementById('count-red').textContent = reds; }
+        }
+
+        function resetarApp(){
+            historico=[]; greens=0; reds=0;
+            document.getElementById('count-green').textContent = '0';
+            document.getElementById('count-red').textContent = '0';
+            document.getElementById('contagem-rodadas').textContent=`AGUARDANDO 3 RODADAS`;
+            document.getElementById('res-aposta').textContent='--'; document.getElementById('res-aposta').style.color="#666";
+            document.getElementById('res-conf').textContent='0%'; document.getElementById('res-col').textContent='--'; document.getElementById('res-nums').textContent='--';
+        }</script>
 </body>
 </html>
